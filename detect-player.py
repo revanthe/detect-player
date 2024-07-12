@@ -5,7 +5,7 @@ import os
 import tempfile
 
 
-bestModelpath = '/mount/src/footballplayervid_detect/best.pt'
+bestModelpath = '/mount/src/detect-player/best.pt'
 model = YOLO(bestModelpath)
 switch = 0 # Switch caseleri kullanarak diğer ekranlar arası geçiş sağla
 
