@@ -37,8 +37,7 @@ match st.session_state.stage:
             set_state()
     case 1:
         st.session_state.uploaded_file = st.file_uploader(r"$\textsf{\Large Upload your video that is a section of any football match!}$", type=["mp4"])
-        if st.session_state.uploaded_file is not None and st.button('Show original video...'):
-            set_state()
+        st.button('Show original video...', on_click=set_state())
     case 2:
         if st.session_state.uploaded_file is not None:
             tfile = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
@@ -46,8 +45,7 @@ match st.session_state.stage:
             st.session_state.video_path = tfile.name
             st.title("Original Video")
             st.video(st.session_state.uploaded_file)
-            if st.button('Process the Video...'):
-                set_state()
+            st.button('Process the Video...',on_click=set_state())
     case 3:
         if st.session_state.video_path is not None and st.session_state.conv_file_path is None:
             video = moviepy.VideoFileClip(st.session_state.video_path)
@@ -71,12 +69,11 @@ match st.session_state.stage:
             video2conv = moviepy.VideoFileClip(str(saved_file_path))
             video2conv.write_videofile(st.session_state.conv_file_path)
             st.success('Processing completed!')
-        if st.session_state.conv_file_path is not None and st.button('Show the Processed video...'):
-            set_state()
+            st.button('Show the Processed video...', on_click=set_state())
     case 4:
         if st.session_state.conv_file_path is not None:
             st.title("Final Video")
             final_video_file = open(st.session_state.conv_file_path, 'rb')
             final_video_bytes = final_video_file.read()
             st.video(final_video_bytes)
-           
+
