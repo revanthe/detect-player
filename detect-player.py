@@ -36,7 +36,7 @@ match st.session_state.stage:
         if st.button('Upload your video...'):
             set_state()
     case 1:
-        st.session_state.uploaded_file = st.file_uploader(r"$\textsf{\Large Upload your video that is a section of any football match!}$", type=["mp4"])
+        st.session_state.uploaded_file = st.file_uploader(r"$\textsf{\Large Upload a section from a sports event!}$", type=["mp4"])
         if st.session_state.uploaded_file is not None and st.button('Show original video...'):
             set_state()
     case 2:
