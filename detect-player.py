@@ -13,7 +13,7 @@ def set_state():
         st.session_state.stage = 0
     else:
         st.session_state.stage += 1
-    st.experimental_rerun()
+    
 
 # İlk başta stage'i ayarlayın
 if 'stage' not in st.session_state:
