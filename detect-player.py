@@ -5,7 +5,7 @@ import moviepy.editor as moviepy
 from ultralytics import YOLO
 
 st.title('Detection of Players at Sports Events')
-best_model_path = r"C:\Users\cenke\Image-process\Ready2Deploy\best.pt"
+best_model_path = '/mount/src/detect-player/best.pt'
 model = YOLO(best_model_path)
 
 def set_state():
