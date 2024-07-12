@@ -33,8 +33,7 @@ if 'conv_file_path' not in st.session_state:
 
 match st.session_state.stage:
     case 0:
-        if st.button('Upload your video...'):
-            set_state()
+        st.button('Upload your video...', on_click=set_state())
     case 1:
         st.session_state.uploaded_file = st.file_uploader(r"$\textsf{\Large Upload your video that is a section of any football match!}$", type=["mp4"])
         st.button('Show original video...', on_click=set_state())
