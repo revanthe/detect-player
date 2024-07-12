@@ -11,8 +11,10 @@ model = YOLO(bestModelPath)
 def set_state():
     if 'stage' not in st.session_state:
         st.session_state.stage = 0
+        st.session_state.disabled = False
     else:
         st.session_state.stage += 1
+        st.session_state.disabled = True
     st.experimental_rerun()
 
 # İlk başta stage'i ayarlayın
@@ -48,7 +50,6 @@ match st.session_state.stage:
             st.video(st.session_state.uploaded_file)
             if st.button('Process the Video...'):
                 set_state()
-                st.session_state.disabled = True
     case 3:
         if st.session_state.video_path is not None and st.session_state.conv_file_path is None:
             video = moviepy.VideoFileClip(st.session_state.video_path)
