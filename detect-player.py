@@ -70,6 +70,7 @@ match st.session_state.stage:
             st.session_state.conv_file_path = os.path.join(results_path, final_video_name)
             video2conv = moviepy.VideoFileClip(str(saved_file_path))
             video2conv.write_videofile(st.session_state.conv_file_path)
+             st.success('Processing completed!')
         if st.session_state.conv_file_path is not None and st.button('Show the Processed video...'):
             set_state()
     case 4:
@@ -78,4 +79,4 @@ match st.session_state.stage:
             final_video_file = open(st.session_state.conv_file_path, 'rb')
             final_video_bytes = final_video_file.read()
             st.video(final_video_bytes)
-            st.success('Processing completed!')
+           
