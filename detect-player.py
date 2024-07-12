@@ -4,16 +4,16 @@ import os
 import moviepy.editor as moviepy
 from ultralytics import YOLO
 
-st.title('Detection of Players at Sports Events')
-best_model_path = '/mount/src/detect-player/best.pt'
-model = YOLO(best_model_path)
+st.title('Detection of Players')
+bestModelPath = '/mount/src/detect-player/best.pt'
+model = YOLO(bestModelPath)
 
 def set_state():
     if 'stage' not in st.session_state:
         st.session_state.stage = 0
     else:
         st.session_state.stage += 1
-    
+    st.experimental_rerun()
 
 # İlk başta stage'i ayarlayın
 if 'stage' not in st.session_state:
@@ -33,10 +33,12 @@ if 'conv_file_path' not in st.session_state:
 
 match st.session_state.stage:
     case 0:
-        st.button('Upload your video...', on_click=set_state())
+        if st.button('Upload your video...'):
+            set_state()
     case 1:
         st.session_state.uploaded_file = st.file_uploader(r"$\textsf{\Large Upload your video that is a section of any football match!}$", type=["mp4"])
-        st.button('Show original video...', on_click=set_state())
+        if st.session_state.uploaded_file is not None and st.button('Show original video...'):
+            set_state()
     case 2:
         if st.session_state.uploaded_file is not None:
             tfile = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
@@ -44,7 +46,8 @@ match st.session_state.stage:
             st.session_state.video_path = tfile.name
             st.title("Original Video")
             st.video(st.session_state.uploaded_file)
-            st.button('Process the Video...',on_click=set_state())
+            if st.button('Process the Video...'):
+                set_state()
     case 3:
         if st.session_state.video_path is not None and st.session_state.conv_file_path is None:
             video = moviepy.VideoFileClip(st.session_state.video_path)
@@ -67,12 +70,12 @@ match st.session_state.stage:
             st.session_state.conv_file_path = os.path.join(results_path, final_video_name)
             video2conv = moviepy.VideoFileClip(str(saved_file_path))
             video2conv.write_videofile(st.session_state.conv_file_path)
-            st.success('Processing completed!')
-            st.button('Show the Processed video...', on_click=set_state())
+        if st.session_state.conv_file_path is not None and st.button('Show the Processed video...'):
+            set_state()
     case 4:
         if st.session_state.conv_file_path is not None:
             st.title("Final Video")
             final_video_file = open(st.session_state.conv_file_path, 'rb')
             final_video_bytes = final_video_file.read()
             st.video(final_video_bytes)
-
+            st.success('Processing completed!')
