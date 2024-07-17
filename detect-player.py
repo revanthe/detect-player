@@ -4,6 +4,12 @@ import os
 import moviepy.editor as moviepy
 from ultralytics import YOLO
 
+primaryColor="#d33682"
+backgroundColor="#002b36"
+secondaryBackgroundColor="#586e75"
+textColor="#fafafa"
+font="sans serif"
+
 st.title('Detection of Players')
 bestModelPath = '/mount/src/detect-player/best.pt'
 model = YOLO(bestModelPath)
